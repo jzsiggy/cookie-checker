@@ -7,7 +7,12 @@ browser.runtime.sendMessage({greeting: "hello"}, function(response) {
     // handle the local storage data
     let localStorageData = JSON.parse(response.localStorageData);
     document.getElementById('storage-content').textContent = JSON.stringify(localStorageData, null, 2);
-
+    
+    // handle the third-party connections
     let thirdPartyConnections = response.thirdPartyConnections;
-    document.getElementById('third-party-content').textContent = JSON.stringify(thirdPartyConnections, null, 2);
+    document.getElementById('thirdparty-content').textContent = JSON.stringify(thirdPartyConnections, null, 2);
+    
+    // handle the potential cookie syncs
+    let potentialCookieSyncs = response.potentialCookieSyncs;
+    document.getElementById('cookiesync-content').textContent = JSON.stringify(potentialCookieSyncs, null, 2);
 });
