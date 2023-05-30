@@ -1,5 +1,8 @@
+let thirdPartyConnections = [];
+
 function logURL(requestDetails) {
   console.log("Loading: " + requestDetails.url);
+  thirdPartyConnections.push(requestDetails.url)
 }
 
 browser.webRequest.onBeforeRequest.addListener(
@@ -16,7 +19,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
           browser.tabs.sendMessage(activeTab.id, {greeting: "hello"}, (response) => {
               // gather your data here and send it as a response
               browser.cookies.getAll({}).then((cookies) => {
-                  sendResponse({data: cookies, localStorageData: response.localStorageData});
+                  sendResponse({data: cookies, localStorageData: response.localStorageData, thirdPartyConnections});
               });
           });
       });

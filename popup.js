@@ -7,4 +7,7 @@ browser.runtime.sendMessage({greeting: "hello"}, function(response) {
     // handle the local storage data
     let localStorageData = JSON.parse(response.localStorageData);
     document.getElementById('storage-content').textContent = JSON.stringify(localStorageData, null, 2);
+
+    let thirdPartyConnections = response.thirdPartyConnections;
+    document.getElementById('third-party-content').textContent = JSON.stringify(thirdPartyConnections, null, 2);
 });
