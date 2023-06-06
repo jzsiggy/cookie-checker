@@ -2,7 +2,18 @@
 browser.runtime.sendMessage({greeting: "hello"}, function(response) {
     // handle the cookie data
     let cookieData = response.data;
-    document.getElementById('cookie-content').textContent = JSON.stringify(cookieData, null, 2);
+    let initialCookieData = cookieData.slice(0, 10);
+    document.getElementById('cookie-content').textContent = JSON.stringify(initialCookieData, null, 2);
+
+    // if there are more cookies, show the "Show more" button
+    if (cookieData.length > 10) {
+        document.getElementById('showMoreCookies').style.display = 'block';
+    }
+
+    document.getElementById('showMoreCookies').addEventListener('click', function() {
+        document.getElementById('cookie-content').textContent = JSON.stringify(cookieData, null, 2);
+        this.style.display = 'none';
+    });
     
     // handle the local storage data
     let localStorageData = JSON.parse(response.localStorageData);
