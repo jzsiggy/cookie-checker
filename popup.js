@@ -15,4 +15,13 @@ browser.runtime.sendMessage({greeting: "hello"}, function(response) {
     // handle the potential cookie syncs
     let potentialCookieSyncs = response.potentialCookieSyncs;
     document.getElementById('cookiesync-content').textContent = JSON.stringify(potentialCookieSyncs, null, 2);
+
+    // create a summary
+    let summary = `
+        Cookies found: ${cookieData.length}<br/>
+        Local Storage items found: ${Object.keys(localStorageData).length}<br/>
+        Third Party connections: ${thirdPartyConnections.length}<br/>
+        Potential Cookie Synchronizations: ${potentialCookieSyncs.length}
+    `;
+    document.getElementById('summary').innerHTML = summary;
 });
