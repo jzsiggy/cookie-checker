@@ -20,7 +20,7 @@ function createTable(jsonData, tableId) {
     tableHead.appendChild(headRow);
 
     // Create table body rows
-    jsonData.forEach((element) => {
+    jsonData.forEach((element, index) => {
         let tr = document.createElement('tr');
         data.forEach((key) => {
             let td = document.createElement('td');
@@ -28,13 +28,31 @@ function createTable(jsonData, tableId) {
             td.appendChild(text);
             tr.appendChild(td);
         });
+
+        // Hide rows that are above the 10th index
+        if (index >= 10) {
+            tr.style.display = 'none';
+        }
         tableBody.appendChild(tr);
     });
 
     table.appendChild(tableHead);
     table.appendChild(tableBody);
-}
 
+    // Create the 'Show More' button and add the event listener
+    if (jsonData.length > 10) {
+        let showMoreBtn = document.createElement('button');
+        showMoreBtn.innerHTML = 'Show More';
+        showMoreBtn.addEventListener('click', function() {
+            let rows = tableBody.getElementsByTagName('tr');
+            for (let i = 10; i < rows.length; i++) {
+                rows[i].style.display = '';
+            }
+            showMoreBtn.style.display = 'none';  // Hide the button
+        });
+        table.parentNode.insertBefore(showMoreBtn, table.nextSibling);
+    }
+}
 
 // Send a message to the background script
 browser.runtime.sendMessage({greeting: "hello"}, function(response) {
